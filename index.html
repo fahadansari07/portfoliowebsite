@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohammad Fahad Ansari | DevOps Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --neon-cyan: #00f5ff;
+    --neon-pink: #ff006e;
+    --neon-green: #39ff14;
+    --neon-yellow: #ffe600;
+    --dark: #04070f;
+    --dark2: #0a0f1e;
+    --card-bg: rgba(10,20,40,0.85);
+    --glow-c: 0 0 10px var(--neon-cyan), 0 0 30px rgba(0,245,255,0.3);
+    --glow-p: 0 0 10px var(--neon-pink), 0 0 30px rgba(255,0,110,0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--dark);
+    color: #cce8ff;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR - STRONG GLOW FOR VISIBILITY */
+  .cursor {
+    position: fixed; width: 24px; height: 24px;
+    background: var(--neon-cyan); border-radius: 50%;
+    pointer-events: none; z-index: 99999;
+    transition: transform 0.1s; mix-blend-mode: screen;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 0 15px var(--neon-cyan), 0 0 30px var(--neon-cyan), 0 0 50px rgba(0,245,255,0.6);
+  }
+  .cursor-trail {
+    position: fixed; width: 40px; height: 40px;
+    border: 2px solid var(--neon-cyan); border-radius: 50%;
+    pointer-events: none; z-index: 99998;
+    transition: transform 0.2s ease, width 0.2s, height 0.2s;
+    transform: translate(-50%,-50%); opacity: 0.5;
+  }
+
+  /* PARTICLES CANVAS */
+  #particles { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    padding: 18px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(4,7,15,0.8); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(0,245,255,0.15);
+  }
+  .nav-logo {
+    font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 900;
+    color: var(--neon-cyan); letter-spacing: 3px;
+    text-shadow: var(--glow-c);
+  }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.8rem;
+    color: rgba(200,230,255,0.7); text-decoration: none;
+    letter-spacing: 2px; text-transform: uppercase;
+    transition: color 0.3s, text-shadow 0.3s;
+  }
+  .nav-links a:hover { color: var(--neon-cyan); text-shadow: var(--glow-c); }
+
+  /* SECTIONS */
+  section { position: relative; z-index: 1; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+  }
+  .hero-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center; max-width: 1200px; width: 100%;
+  }
+  .hero-left { position: relative; }
+  .hero-tag {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.75rem;
+    color: var(--neon-pink); letter-spacing: 4px; text-transform: uppercase;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 12px;
+  }
+  .hero-tag::before {
+    content: ''; display: block; width: 40px; height: 2px;
+    background: var(--neon-pink); box-shadow: var(--glow-p);
+  }
+  .hero-name {
+    font-family: 'Orbitron', monospace; font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 900; line-height: 1.1; margin-bottom: 16px;
+    background: linear-gradient(135deg, #fff 0%, var(--neon-cyan) 60%, var(--neon-pink) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-title {
+    font-family: 'Rajdhani', sans-serif; font-size: 1.2rem; font-weight: 500;
+    color: var(--neon-cyan); letter-spacing: 3px; margin-bottom: 24px;
+    text-shadow: 0 0 20px rgba(0,245,255,0.5);
+  }
+  .hero-desc { font-size: 1rem; line-height: 1.7; color: rgba(200,230,255,0.75); margin-bottom: 40px; }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 14px 32px; font-family: 'Orbitron', monospace; font-size: 0.75rem;
+    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    background: linear-gradient(135deg, var(--neon-cyan), #0080ff);
+    color: #000; border: none; border-radius: 4px; cursor: none;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+    box-shadow: 0 0 20px rgba(0,245,255,0.4);
+  }
+  .btn-primary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 0 40px rgba(0,245,255,0.7); }
+  .btn-outline {
+    padding: 14px 32px; font-family: 'Orbitron', monospace; font-size: 0.75rem;
+    font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    background: transparent; color: var(--neon-pink);
+    border: 2px solid var(--neon-pink); border-radius: 4px; cursor: none;
+    transition: all 0.3s; text-decoration: none; display: inline-block;
+    box-shadow: 0 0 15px rgba(255,0,110,0.3);
+  }
+  .btn-outline:hover { background: var(--neon-pink); color: #000; box-shadow: 0 0 40px rgba(255,0,110,0.6); transform: translateY(-3px); }
+
+  /* PHOTO FRAME */
+  .hero-right { display: flex; justify-content: center; align-items: center; }
+  .photo-wrapper {
+    position: relative; width: 360px; height: 360px;
+  }
+  .photo-wrapper::before {
+    content: ''; position: absolute; inset: -4px;
+    background: linear-gradient(45deg, var(--neon-cyan), var(--neon-pink), var(--neon-cyan));
+    border-radius: 12px; animation: rotateBorder 4s linear infinite;
+    background-size: 200% 200%;
+  }
+  @keyframes rotateBorder {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .photo-inner {
+    position: relative; z-index: 1; width: 100%; height: 100%;
+    border-radius: 10px; overflow: hidden;
+    background: #0a1428;
+  }
+  .photo-inner img {
+    width: 100%; height: 100%; object-fit: cover; object-position: top center;
+    filter: saturate(1.1) contrast(1.05);
+    transition: transform 0.5s;
+  }
+  .photo-wrapper:hover .photo-inner img { transform: scale(1.05); }
+  .photo-corner {
+    position: absolute; width: 20px; height: 20px; z-index: 2;
+  }
+  .photo-corner.tl { top: 8px; left: 8px; border-top: 3px solid var(--neon-cyan); border-left: 3px solid var(--neon-cyan); }
+  .photo-corner.tr { top: 8px; right: 8px; border-top: 3px solid var(--neon-cyan); border-right: 3px solid var(--neon-cyan); }
+  .photo-corner.bl { bottom: 8px; left: 8px; border-bottom: 3px solid var(--neon-cyan); border-left: 3px solid var(--neon-cyan); }
+  .photo-corner.br { bottom: 8px; right: 8px; border-bottom: 3px solid var(--neon-cyan); border-right: 3px solid var(--neon-cyan); }
+  .status-badge {
+    position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+    background: var(--neon-green); color: #000; font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem; padding: 6px 20px; border-radius: 20px; letter-spacing: 2px;
+    white-space: nowrap; font-weight: 700;
+    box-shadow: 0 0 20px rgba(57,255,20,0.6);
+    animation: pulse-badge 2s ease-in-out infinite;
+  }
+  @keyframes pulse-badge { 0%,100%{box-shadow:0 0 20px rgba(57,255,20,0.6);} 50%{box-shadow:0 0 35px rgba(57,255,20,1);} }
+
+  /* STATS BAR */
+  .stats-bar {
+    display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;
+    padding: 40px 48px; background: rgba(0,245,255,0.03);
+    border-top: 1px solid rgba(0,245,255,0.1); border-bottom: 1px solid rgba(0,245,255,0.1);
+  }
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-family: 'Orbitron', monospace; font-size: 2rem; font-weight: 900;
+    color: var(--neon-cyan); display: block; text-shadow: var(--glow-c);
+  }
+  .stat-label {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+    color: rgba(200,230,255,0.5); letter-spacing: 2px; text-transform: uppercase;
+  }
+
+  /* SECTION TITLES */
+  .sec-title-wrap { text-align: center; margin-bottom: 64px; }
+  .sec-tag {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+    color: var(--neon-pink); letter-spacing: 5px; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .sec-title {
+    font-family: 'Orbitron', monospace; font-size: clamp(1.8rem, 3vw, 2.8rem);
+    font-weight: 900; background: linear-gradient(135deg, #fff, var(--neon-cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .sec-line {
+    width: 80px; height: 3px; margin: 16px auto 0;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+    box-shadow: 0 0 15px rgba(0,245,255,0.5);
+  }
+
+  /* SKILLS SECTION */
+  #skills { padding: 100px 48px; }
+  .skills-grid { 
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); 
+    gap: 24px; max-width: 1200px; margin: 0 auto; 
+  }
+  .skill-card {
+    background: var(--card-bg); border: 1px solid rgba(0,245,255,0.12);
+    border-radius: 12px; padding: 28px; cursor: pointer;
+    transition: all 0.35s; position: relative; overflow: hidden;
+  }
+  .skill-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+    transform: scaleX(0); transition: transform 0.4s;
+  }
+  .skill-card:hover::before { transform: scaleX(1); }
+  .skill-card:hover {
+    border-color: rgba(0,245,255,0.4); transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,245,255,0.12);
+    background: rgba(0,245,255,0.05);
+  }
+  .skill-icon { font-size: 2.4rem; margin-bottom: 14px; display: block; }
+  .skill-cat {
+    font-family: 'Orbitron', monospace; font-size: 0.85rem; font-weight: 700;
+    color: var(--neon-cyan); letter-spacing: 2px; margin-bottom: 16px; text-transform: uppercase;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.72rem;
+    padding: 4px 12px; border-radius: 20px; letter-spacing: 1px;
+    background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25);
+    color: rgba(200,230,255,0.85); transition: all 0.25s;
+  }
+  .skill-card:hover .tag { background: rgba(0,245,255,0.15); border-color: var(--neon-cyan); }
+
+  /* EXPERIENCE */
+  #experience { padding: 100px 48px; background: rgba(0,0,20,0.5); }
+  .exp-timeline { max-width: 780px; margin: 0 auto; position: relative; }
+  .exp-timeline::before {
+    content: ''; position: absolute; left: 24px; top: 0; bottom: 0; width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--neon-cyan), transparent);
+  }
+  .exp-item {
+    display: flex; gap: 32px; margin-bottom: 48px; position: relative; align-items: flex-start;
+  }
+  .exp-dot {
+    flex-shrink: 0; width: 48px; display: flex; align-items: flex-start; justify-content: center;
+    padding-top: 6px; position: relative; z-index: 1;
+  }
+  .exp-dot-inner {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--neon-cyan); box-shadow: var(--glow-c);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot { 0%,100%{transform:scale(1);} 50%{transform:scale(1.4);} }
+  .exp-content {
+    flex: 1; background: var(--card-bg); border: 1px solid rgba(0,245,255,0.12);
+    border-radius: 12px; padding: 28px; transition: all 0.35s; cursor: pointer;
+  }
+  .exp-content:hover {
+    border-color: rgba(0,245,255,0.4); transform: translateX(6px);
+    box-shadow: 0 15px 50px rgba(0,245,255,0.1);
+  }
+  .exp-period {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.7rem;
+    color: var(--neon-pink); letter-spacing: 2px; margin-bottom: 8px;
+  }
+  .exp-role {
+    font-family: 'Orbitron', monospace; font-size: 1rem; font-weight: 700;
+    color: #fff; margin-bottom: 4px;
+  }
+  .exp-company {
+    font-size: 0.9rem; color: var(--neon-cyan); font-weight: 600; margin-bottom: 16px;
+  }
+  .exp-bullets { list-style: none; }
+  .exp-bullets li {
+    font-size: 0.88rem; color: rgba(200,230,255,0.75); margin-bottom: 8px;
+    padding-left: 18px; position: relative; line-height: 1.5;
+  }
+  .exp-bullets li::before {
+    content: '▸'; position: absolute; left: 0; color: var(--neon-cyan);
+  }
+
+  /* PROJECTS */
+  #projects { padding: 100px 48px; }
+  .projects-grid { 
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(340px,1fr)); 
+    gap: 28px; max-width: 1200px; margin: 0 auto; 
+  }
+  .proj-card {
+    background: var(--card-bg); border: 1px solid rgba(0,245,255,0.1);
+    border-radius: 16px; padding: 36px 32px; cursor: pointer;
+    transition: all 0.4s; position: relative; overflow: hidden;
+  }
+  .proj-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+    transform: scaleX(0); transition: transform 0.4s;
+    transform-origin: left;
+  }
+  .proj-card:hover::after { transform: scaleX(1); }
+  .proj-card:hover {
+    border-color: rgba(0,245,255,0.35); transform: translateY(-8px);
+    box-shadow: 0 30px 80px rgba(0,245,255,0.12);
+  }
+  .proj-number {
+    font-family: 'Orbitron', monospace; font-size: 3rem; font-weight: 900;
+    color: rgba(0,245,255,0.08); position: absolute; top: 20px; right: 24px;
+    line-height: 1;
+  }
+  .proj-icon { font-size: 2.4rem; margin-bottom: 18px; display: block; }
+  .proj-title {
+    font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700;
+    color: #fff; margin-bottom: 14px; line-height: 1.3;
+  }
+  .proj-desc { font-size: 0.88rem; color: rgba(200,230,255,0.7); line-height: 1.6; margin-bottom: 20px; }
+  .proj-tech { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tech-badge {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.68rem;
+    padding: 3px 10px; border-radius: 4px; letter-spacing: 1px;
+    background: rgba(255,0,110,0.1); border: 1px solid rgba(255,0,110,0.3);
+    color: var(--neon-pink);
+  }
+
+  /* EDUCATION */
+  #education { padding: 100px 48px; background: rgba(0,0,20,0.5); }
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap: 24px; max-width: 900px; margin: 0 auto; }
+  .edu-card {
+    background: var(--card-bg); border: 1px solid rgba(255,0,110,0.15);
+    border-radius: 12px; padding: 32px; cursor: pointer; transition: all 0.35s;
+    position: relative; overflow: hidden;
+  }
+  .edu-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan));
+    transform: scaleX(0); transition: transform 0.4s;
+  }
+  .edu-card:hover::before { transform: scaleX(1); }
+  .edu-card:hover {
+    border-color: rgba(255,0,110,0.4); transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(255,0,110,0.12);
+  }
+  .edu-degree {
+    font-family: 'Orbitron', monospace; font-size: 1.1rem; font-weight: 700;
+    color: #fff; margin-bottom: 8px;
+  }
+  .edu-school {
+    font-size: 0.95rem; color: var(--neon-cyan); font-weight: 600; margin-bottom: 16px;
+  }
+  .edu-year {
+    font-family: 'Share Tech Mono', monospace; font-size: 0.75rem;
+    color: var(--neon-pink); letter-spacing: 2px;
+  }
+
+  /* CONTACT */
+  #contact { padding: 100px 48px; background: var(--dark2); }
+  .contact-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  }
+  .contact-left h2 {
+    font-family: 'Orbitron', monospace; font-size: 2.2rem; font-weight: 900;
+    background: linear-gradient(135deg, #fff, var(--neon-cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .contact-desc { margin: 24px 0 40px; line-height: 1.7; color: rgba(200,230,255,0.75); }
+  .contact-items {
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .contact-item {
+    display: flex; align-items: center; gap: 20px;
+    background: var(--card-bg); padding: 18px 24px; border-radius: 12px;
+    border: 1px solid rgba(0,245,255,0.15); transition: all 0.3s; cursor: pointer;
+    text-decoration: none; color: inherit;
+  }
+  .contact-item:hover {
+    border-color: var(--neon-cyan); transform: translateX(8px);
+    box-shadow: 0 0 30px rgba(0,245,255,0.2);
+  }
+  .contact-icon { font-size: 1.8rem; width: 40px; }
+  .contact-text { flex: 1; }
+  .contact-label { font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; letter-spacing: 2px; color: rgba(200,230,255,0.6); }
+  .contact-val { font-size: 1rem; font-weight: 500; }
+
+  footer {
+    text-align: center; padding: 40px 20px; font-size: 0.75rem;
+    color: rgba(200,230,255,0.4); border-top: 1px solid rgba(0,245,255,0.1);
+  }
+
+  /* MODALS */
+  .modal-overlay {
+    display: none; position: fixed; inset: 0; background: rgba(4,7,15,0.95);
+    z-index: 100000; align-items: center; justify-content: center;
+  }
+  .modal-overlay.active { display: flex; }
+  .modal-box {
+    background: var(--card-bg); border: 2px solid var(--neon-cyan);
+    border-radius: 16px; width: 90%; max-width: 620px; padding: 40px;
+    position: relative; box-shadow: var(--glow-c);
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 24px; background: none; border: none;
+    font-size: 1.8rem; color: var(--neon-pink); cursor: pointer;
+  }
+  .modal-title {
+    font-family: 'Orbitron', monospace; font-size: 1.4rem; margin-bottom: 24px;
+    color: var(--neon-cyan);
+  }
+
+  /* MOBILE RESPONSIVE */
+  @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-trail { display: none !important; }
+    nav { padding: 14px 24px; }
+    .nav-links { gap: 18px; flex-wrap: wrap; justify-content: center; }
+    .nav-links a { font-size: 0.75rem; }
+    #hero { padding: 90px 24px 60px; min-height: auto; }
+    .hero-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; }
+    .photo-wrapper { width: 280px; height: 280px; margin: 0 auto; }
+    .stats-bar { gap: 30px; padding: 30px 24px; }
+    .stat-num { font-size: 1.7rem; }
+    section { padding: 70px 24px; }
+    .skills-grid, .projects-grid, .edu-grid { grid-template-columns: 1fr; }
+    .exp-timeline::before { left: 14px; }
+    .exp-item { flex-direction: column; gap: 16px; }
+    .exp-dot { width: auto; justify-content: flex-start; padding-top: 0; }
+    .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .modal-box { width: 95%; padding: 30px 20px; }
+  }
+  @media (max-width: 480px) {
+    .hero-name { font-size: clamp(2rem, 8vw, 3rem); }
+    .btn-primary, .btn-outline { padding: 12px 24px; font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+  <!-- CURSOR -->
+  <div id="cursor" class="cursor"></div>
+  <div id="cursorTrail" class="cursor-trail"></div>
+  <canvas id="particles"></canvas>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">MOHAMMAD FAHAD</div>
+    <ul class="nav-links">
+      <li><a href="#hero" onclick="smoothScroll('hero', event)">HOME</a></li>
+      <li><a href="#skills" onclick="smoothScroll('skills', event)">SKILLS</a></li>
+      <li><a href="#experience" onclick="smoothScroll('experience', event)">EXPERIENCE</a></li>
+      <li><a href="#projects" onclick="smoothScroll('projects', event)">PROJECTS</a></li>
+      <li><a href="#education" onclick="smoothScroll('education', event)">EDUCATION</a></li>
+      <li><a href="#contact" onclick="smoothScroll('contact', event)">CONTACT</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO - ONLY CHANGE: "SERVER ADMINISTRATOR" -->
+  <section id="hero">
+    <div class="hero-grid">
+      <div class="hero-left">
+        <div class="hero-tag">
+          <span>DEVOPS • SYSADMIN • CLOUD</span>
+        </div>
+        <h1 class="hero-name">MOHAMMAD FAHAD ANSARI</h1>
+        <div class="hero-title">SERVER ADMINISTRATOR &amp; DEVOPS ENGINEER</div>
+        <p class="hero-desc">3+ years managing Linux servers, cloud infrastructure (Azure &amp; AWS), Docker containers, CI/CD pipelines, and high-availability web hosting environments. Passionate about automation, performance optimization, and building reliable production systems.</p>
+        <div class="hero-btns">
+          <a href="#projects" onclick="smoothScroll('projects', event)" class="btn-primary">VIEW PROJECTS</a>
+          <a href="https://linkedin.com/in/fahad-ansari-devops" target="_blank" class="btn-outline">CONNECT ON LINKEDIN</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="photo-wrapper">
+          <div class="photo-inner">
+            <img src="Profile Photo.jpeg" alt="Mohammad Fahad Ansari - DevOps Engineer">
+          </div>
+          <div class="photo-corner tl"></div>
+          <div class="photo-corner tr"></div>
+          <div class="photo-corner bl"></div>
+          <div class="photo-corner br"></div>
+          <div class="status-badge">AVAILABLE FOR OPPORTUNITIES</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num" data-target="3">0</div>
+      <div class="stat-label">+ YEARS EXPERIENCE</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="100">0</div>
+      <div class="stat-label">SERVERS MANAGED</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="99.9">0</div>
+      <div class="stat-label">99.9% UPTIME MAINTAINED</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num" data-target="2">0</div>
+      <div class="stat-label">CLOUD PLATFORMS</div>
+    </div>
+  </div>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="sec-title-wrap">
+      <div class="sec-tag">EXPERTISE</div>
+      <div class="sec-title">TECHNICAL SKILLS</div>
+      <div class="sec-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card" onclick="openModal('os')">
+        <span class="skill-icon">🖥️</span>
+        <div class="skill-cat">Operating Systems</div>
+        <div class="skill-tags">
+          <span class="tag">Linux (Ubuntu/CentOS/RHEL)</span>
+          <span class="tag">Windows Server</span>
+          <span class="tag">Shell Configuration</span>
+          <span class="tag">System Hardening</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('cloud')">
+        <span class="skill-icon">☁️</span>
+        <div class="skill-cat">Cloud Platforms</div>
+        <div class="skill-tags">
+          <span class="tag">Azure VMs / Storage / NSG</span>
+          <span class="tag">Azure Virtual Networks</span>
+          <span class="tag">Azure DevOps / Monitor</span>
+          <span class="tag">AWS EC2 / EBS / IAM</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('automation')">
+        <span class="skill-icon">⚙️</span>
+        <div class="skill-cat">Automation &amp; Scripting</div>
+        <div class="skill-tags">
+          <span class="tag">Bash Scripting</span>
+          <span class="tag">Python</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">Cron Jobs</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('containers')">
+        <span class="skill-icon">🐳</span>
+        <div class="skill-cat">Containerization</div>
+        <div class="skill-tags">
+          <span class="tag">Docker</span>
+          <span class="tag">Docker Compose</span>
+          <span class="tag">Kubernetes (Basic)</span>
+          <span class="tag">Dockerfile</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('devops')">
+        <span class="skill-icon">🔄</span>
+        <div class="skill-cat">DevOps &amp; CI/CD</div>
+        <div class="skill-tags">
+          <span class="tag">CI/CD Pipelines</span>
+          <span class="tag">Azure DevOps</span>
+          <span class="tag">GitHub Actions</span>
+          <span class="tag">Git / GitHub</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('web')">
+        <span class="skill-icon">🌐</span>
+        <div class="skill-cat">Web &amp; Hosting</div>
+        <div class="skill-tags">
+          <span class="tag">Apache / NGINX</span>
+          <span class="tag">cPanel / Plesk</span>
+          <span class="tag">SSL Certificates</span>
+          <span class="tag">DNS Management</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('monitoring')">
+        <span class="skill-icon">📊</span>
+        <div class="skill-cat">Monitoring &amp; Logging</div>
+        <div class="skill-tags">
+          <span class="tag">Azure Monitor</span>
+          <span class="tag">Log Analytics</span>
+          <span class="tag">Performance Monitoring</span>
+          <span class="tag">Custom Python Scripts</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('net')">
+        <span class="skill-icon">🔗</span>
+        <div class="skill-cat">Networking &amp; Security</div>
+        <div class="skill-tags">
+          <span class="tag">DNS / TCP/IP</span>
+          <span class="tag">Firewalls / NSG</span>
+          <span class="tag">SSL/TLS</span>
+          <span class="tag">SSH Access Control</span>
+        </div>
+      </div>
+      <div class="skill-card" onclick="openModal('db')">
+        <span class="skill-icon">🗄️</span>
+        <div class="skill-cat">Databases</div>
+        <div class="skill-tags">
+          <span class="tag">MySQL Administration</span>
+          <span class="tag">Query Optimization</span>
+          <span class="tag">Backup &amp; Recovery</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="sec-title-wrap">
+      <div class="sec-tag">JOURNEY</div>
+      <div class="sec-title">PROFESSIONAL EXPERIENCE</div>
+      <div class="sec-line"></div>
+    </div>
+    <div class="exp-timeline">
+      <div class="exp-item">
+        <div class="exp-dot"><div class="exp-dot-inner"></div></div>
+        <div class="exp-content">
+          <div class="exp-period">JUNE 2023 — PRESENT</div>
+          <div class="exp-role">System Admin Associate</div>
+          <div class="exp-company">Newfold Digital • Mumbai, India</div>
+          <ul class="exp-bullets">
+            <li>Managed 100+ Linux-based production servers, including VPS, dedicated servers, and cloud environments on Azure and AWS, maintaining 99.9% uptime.</li>
+            <li>Maintained web hosting platforms like cPanel and Plesk, handling DNS configurations, email provisioning, and SSL certificate renewals to support seamless client operations.</li>
+            <li>Supported cloud and virtualized deployments, troubleshooting configurations for VMs, storage, and networking components while integrating Docker containers for isolated app testing.</li>
+            <li>Tuned Apache and NGINX servers for optimal load handling, including traffic routing and caching strategies, in live environments serving thousands of daily users.</li>
+            <li>Enforced server security protocols, managing user permissions, SSH access, and firewall rules to align with compliance standards and mitigate vulnerabilities.</li>
+            <li>Resolved escalated support tickets via thorough diagnostics, delivering permanent solutions and clear communication to stakeholders through tickets and calls.</li>
+            <li>Monitored server metrics, application logs, and system performance using built-in tools and custom Python scripts, identifying bottlenecks early to prevent service disruptions in high-traffic hosting setups.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="sec-title-wrap">
+      <div class="sec-tag">HANDS-ON</div>
+      <div class="sec-title">DEVOPS &amp; CLOUD PROJECTS</div>
+      <div class="sec-line"></div>
+    </div>
+    <div class="projects-grid">
+      <div class="proj-card" onclick="openModal('proj1')">
+        <div class="proj-number">01</div>
+        <span class="proj-icon">🏗️</span>
+        <div class="proj-title">Three-Tier Web Application Deployment on Microsoft Azure</div>
+        <p class="proj-desc">Designed and deployed a production-grade three-tier web app on Azure with Linux VMs, managed database, VNet, NSG, load balancer, and full monitoring.</p>
+        <div class="proj-tech">
+          <span class="tech-badge">Azure</span>
+          <span class="tech-badge">Linux VMs</span>
+          <span class="tech-badge">VNet + NSG</span>
+          <span class="tech-badge">Load Balancer</span>
+          <span class="tech-badge">Azure Monitor</span>
+        </div>
+      </div>
+      <div class="proj-card" onclick="openModal('proj2')">
+        <div class="proj-number">02</div>
+        <span class="proj-icon">🐳</span>
+        <div class="proj-title">Containerized Application Deployment using Docker</div>
+        <p class="proj-desc">Containerized a web application using Docker for consistent deployments across dev/test environments with GitOps and basic CI/CD.</p>
+        <div class="proj-tech">
+          <span class="tech-badge">Docker</span>
+          <span class="tech-badge">Docker Compose</span>
+          <span class="tech-badge">Dockerfile</span>
+          <span class="tech-badge">GitHub</span>
+          <span class="tech-badge">CI/CD</span>
+        </div>
+      </div>
+      <div class="proj-card" onclick="openModal('proj3')">
+        <div class="proj-number">03</div>
+        <span class="proj-icon">🚀</span>
+        <div class="proj-title">CI/CD Pipeline for Containerized Application on Microsoft Azure</div>
+        <p class="proj-desc">End-to-end CI/CD pipeline using GitHub Actions, Docker images pushed to ACR, and automated deployment to Azure Linux VM with monitoring.</p>
+        <div class="proj-tech">
+          <span class="tech-badge">GitHub Actions</span>
+          <span class="tech-badge">Azure Container Registry</span>
+          <span class="tech-badge">Azure VM</span>
+          <span class="tech-badge">Docker</span>
+          <span class="tech-badge">Azure Monitor</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="sec-title-wrap">
+      <div class="sec-tag">ACADEMICS</div>
+      <div class="sec-title">EDUCATION</div>
+      <div class="sec-line"></div>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree">BSC - Computer Science</div>
+        <div class="edu-school">Thakur College of Science and Commerce, Mumbai University</div>
+        <div class="edu-year">Apr 2020 — Apr 2023</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">HSC - Science</div>
+        <div class="edu-school">Royal College of Science and Commerce, Maharashtra Board</div>
+        <div class="edu-year">Mar 2018 — Feb 2020</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <h2>LET'S BUILD SOMETHING RELIABLE</h2>
+        <p class="contact-desc">Open to DevOps, System Administrator, and Cloud Engineering roles. Available immediately for full-time opportunities in Mumbai or remote.</p>
+        
+        <a href="mailto:ansarifahad086@gmail.com?subject=DevOps%20%2F%20System%20Admin%20Opportunity%20-%20Interested%20in%20Your%20Profile&body=Hi%20Mohammad%20Fahad%2C%0A%0AI%20came%20across%20your%20portfolio%20and%20was%20impressed%20by%20your%20experience%20in%20Azure%2C%20Docker%2C%20CI%2FCD%20pipelines%20and%20Linux%20server%20management.%0A%0AI%20would%20love%20to%20discuss%20potential%20opportunities%20with%20you.%0A%0ABest%20regards%2C%0A%5BYour%20Name%5D%0A%5BYour%20Company%5D%0A%5BYour%20Contact%5D" 
+           class="btn-primary" style="display:inline-block;">
+          EMAIL ME DIRECTLY
+        </a>
+      </div>
+      <div class="contact-items">
+        <a class="contact-item" href="tel:+917506688067">
+          <span class="contact-icon">📱</span>
+          <div class="contact-text">
+            <div class="contact-label">PHONE</div>
+            <div class="contact-val">+91 7506688067</div>
+          </div>
+        </a>
+        <a class="contact-item" href="mailto:ansarifahad086@gmail.com">
+          <span class="contact-icon">✉️</span>
+          <div class="contact-text">
+            <div class="contact-label">EMAIL</div>
+            <div class="contact-val">ansarifahad086@gmail.com</div>
+          </div>
+        </a>
+        <a class="contact-item" href="https://linkedin.com/in/fahad-ansari-devops" target="_blank">
+          <span class="contact-icon">💼</span>
+          <div class="contact-text">
+            <div class="contact-label">LINKEDIN</div>
+            <div class="contact-val">linkedin.com/in/fahad-ansari-devops</div>
+          </div>
+        </a>
+        <a class="contact-item" href="#">
+          <span class="contact-icon">📍</span>
+          <div class="contact-text">
+            <div class="contact-label">LOCATION</div>
+            <div class="contact-val">Mumbai, India</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Mohammad Fahad Ansari &nbsp;·&nbsp; Built with passion &amp; precision &nbsp;·&nbsp; DevOps // SysAdmin // Cloud</p>
+  </footer>
+
+  <!-- MODALS -->
+  <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
+
+<script>
+/* ─── SMOOTH SCROLL ─── */
+function smoothScroll(id, e) {
+  if(e) e.preventDefault();
+  const target = document.getElementById(id);
+  if(!target) return;
+  const navH = document.querySelector('nav').offsetHeight;
+  const top = target.getBoundingClientRect().top + window.scrollY - navH - 12;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+/* ─── CURSOR ─── */
+const cursor = document.getElementById('cursor');
+const trail = document.getElementById('cursorTrail');
+let mx=0, my=0, tx=0, ty=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx+'px'; cursor.style.top = my+'px';
+});
+function animTrail() {
+  tx += (mx-tx)*0.12; ty += (my-ty)*0.12;
+  trail.style.left = tx+'px'; trail.style.top = ty+'px';
+  requestAnimationFrame(animTrail);
+}
+animTrail();
+
+/* ─── PARTICLES ─── */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+window.addEventListener('resize', () => { canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+const particles = [];
+for(let i=0;i<120;i++) particles.push({
+  x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+  vx: (Math.random()-0.5)*0.4, vy: (Math.random()-0.5)*0.4,
+  r: Math.random()*1.5+0.3,
+  color: Math.random()>0.6 ? '#00f5ff' : Math.random()>0.5 ? '#ff006e' : '#39ff14',
+  a: Math.random()*0.6+0.1
+});
+function drawParticles() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if(p.x<0) p.x=canvas.width; if(p.x>canvas.width) p.x=0;
+    if(p.y<0) p.y=canvas.height; if(p.y>canvas.height) p.y=0;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.globalAlpha = p.a;
+    ctx.fill();
+  });
+  ctx.globalAlpha = 1;
+  for(let i=0;i<particles.length;i++) for(let j=i+1;j<particles.length;j++) {
+    const dx=particles[i].x-particles[j].x, dy=particles[i].y-particles[j].y;
+    const d=Math.sqrt(dx*dx+dy*dy);
+    if(d<110) {
+      ctx.beginPath();
+      ctx.moveTo(particles[i].x,particles[i].y);
+      ctx.lineTo(particles[j].x,particles[j].y);
+      ctx.strokeStyle='rgba(0,245,255,'+(0.08*(1-d/110))+')';
+      ctx.lineWidth=0.5;
+      ctx.stroke();
+    }
+  }
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+
+/* ─── COUNTER ANIMATION ─── */
+function animateCounter(el, target) {
+  let current = 0;
+  const step = target / 60;
+  const isDecimal = target % 1 !== 0;
+  const timer = setInterval(() => {
+    current += step;
+    if (current >= target) {
+      el.textContent = isDecimal ? target.toFixed(1) : Math.floor(current);
+      clearInterval(timer);
+    } else {
+      el.textContent = isDecimal ? current.toFixed(1) : Math.floor(current);
+    }
+  }, 20);
+}
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      document.querySelectorAll('.stat-num').forEach(n => {
+        animateCounter(n, parseFloat(n.dataset.target));
+      });
+      io.disconnect();
+    }
+  });
+}, {threshold:0.5});
+const statsBar = document.querySelector('.stats-bar');
+if(statsBar) io.observe(statsBar);
+
+/* ─── MODAL DATA ─── */
+const modalData = {
+  os: { title: '🖥️ Operating Systems', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Deep expertise in Linux server administration and Windows environments, covering day-to-day operations, performance tuning, and security hardening.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">Linux (Ubuntu/CentOS/RHEL)</span><span class="tag">Windows Server</span><span class="tag">Shell Configuration</span><span class="tag">Process Management</span><span class="tag">System Hardening</span></div>` },
+  cloud: { title: '☁️ Cloud Platforms', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Hands-on with Microsoft Azure and AWS, provisioning and managing cloud resources for production workloads.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">Azure VMs</span><span class="tag">Azure Storage</span><span class="tag">NSG</span><span class="tag">Virtual Networks</span><span class="tag">Azure DevOps</span><span class="tag">Azure Monitor</span><span class="tag">Azure Backup</span><span class="tag">AWS EC2</span><span class="tag">AWS EBS</span><span class="tag">AWS IAM</span><span class="tag">AWS Networking</span></div>` },
+  automation: { title: '⚙️ Automation & Scripting', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Automating everything that can be automated — from server provisioning to monitoring scripts — using Bash, Python, and PowerShell.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">Bash Scripting</span><span class="tag">Python</span><span class="tag">PowerShell</span><span class="tag">Task Scheduling (Cron)</span><span class="tag">Custom Monitoring Scripts</span></div>` },
+  containers: { title: '🐳 Containerization & Orchestration', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Building, managing, and deploying containerized applications with Docker, and beginning to explore Kubernetes for orchestration.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">Docker</span><span class="tag">Docker Compose</span><span class="tag">Kubernetes (Basic)</span><span class="tag">Container Registries</span><span class="tag">Image Building (Dockerfile)</span></div>` },
+  devops: { title: '🔄 DevOps & CI/CD', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Building pipelines that automate the entire lifecycle from code commit to production deployment — fast, reliable, and repeatable.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">CI/CD Pipelines</span><span class="tag">Azure DevOps</span><span class="tag">GitHub Actions</span><span class="tag">Git</span><span class="tag">GitHub</span><span class="tag">Automated Testing</span></div>` },
+  web: { title: '🌐 Web & Hosting', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Managing high-traffic web hosting environments with expertise in performance tuning, SSL management, and platform administration.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">Apache</span><span class="tag">NGINX</span><span class="tag">cPanel</span><span class="tag">Plesk</span><span class="tag">SSL Certificates</span><span class="tag">DNS Management</span><span class="tag">Email Provisioning</span></div>` },
+  monitoring: { title: '📊 Monitoring & Logging', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Proactive infrastructure monitoring and log analysis to catch problems before they become incidents.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">Azure Monitor</span><span class="tag">Log Analytics</span><span class="tag">Performance Monitoring</span><span class="tag">Alerting & Notifications</span><span class="tag">Custom Python Scripts</span></div>` },
+  net: { title: '🔗 Networking & Security', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">Designing and securing network infrastructure with firewalls, VPNs, and strict access control policies.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">DNS</span><span class="tag">TCP/IP</span><span class="tag">SSL/TLS</span><span class="tag">Firewalls</span><span class="tag">NSG (Azure)</span><span class="tag">SSH Access Control</span><span class="tag">Vulnerability Mitigation</span></div>` },
+  db: { title: '🗄️ Databases', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:16px;">MySQL database administration, troubleshooting, and optimization in production environments.</p><div style="display:flex;flex-wrap:wrap;gap:8px;"><span class="tag">MySQL</span><span class="tag">Database Admin</span><span class="tag">Query Optimization</span><span class="tag">Backup & Recovery</span></div>` },
+  proj1: { title: '🏗️ Three-Tier Web App on Azure', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:20px;">Designed and deployed a production-grade three-tier web application architecture on Microsoft Azure. The project showcases end-to-end cloud infrastructure design for real-world scalability and security.</p><h4 style="color:var(--neon-cyan);font-family:'Orbitron',monospace;font-size:0.8rem;margin-bottom:12px;letter-spacing:2px;">KEY HIGHLIGHTS</h4><ul style="list-style:none;padding:0;"><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Linux VMs for web &amp; application tiers</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Managed database service for data tier</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ VNet + NSG for secure inter-tier communication</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Load balancer for traffic distribution</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Azure Monitor + Log Analytics for full observability</li></ul>` },
+  proj2: { title: '🐳 Containerized App with Docker', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:20px;">Containerized a web application to ensure consistent deployments across development and testing environments. Implemented GitOps practices with automated CI/CD workflows.</p><h4 style="color:var(--neon-cyan);font-family:'Orbitron',monospace;font-size:0.8rem;margin-bottom:12px;letter-spacing:2px;">KEY HIGHLIGHTS</h4><ul style="list-style:none;padding:0;"><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Custom Docker images via Dockerfile</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Multi-container apps with Docker Compose</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Git/GitHub for version control &amp; collaboration</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Automated build &amp; deployment workflow</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Container log monitoring for reliability</li></ul>` },
+  proj3: { title: '🚀 CI/CD Pipeline on Azure', body: `<p style="color:rgba(200,230,255,0.8);line-height:1.7;margin-bottom:20px;">End-to-end CI/CD pipeline automating the full deployment lifecycle of a containerized application on Microsoft Azure — from code push to production.</p><h4 style="color:var(--neon-cyan);font-family:'Orbitron',monospace;font-size:0.8rem;margin-bottom:12px;letter-spacing:2px;">KEY HIGHLIGHTS</h4><ul style="list-style:none;padding:0;"><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ GitHub Actions for automated build triggers</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Docker image build &amp; push to Azure Container Registry</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Automated deployment to Azure Linux VMs</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Azure Monitor integration for health tracking</li><li style="color:rgba(200,230,255,0.75);padding:6px 0 6px 18px;position:relative;font-size:0.9rem;">✦ Consistent, repeatable deployment across environments</li></ul>` },
+};
+
+function openModal(key) {
+  const d = modalData[key];
+  if(!d) return;
+  document.getElementById('modal-content').innerHTML = `<div class="modal-title">${d.title}</div>${d.body}`;
+  document.getElementById('modal').classList.add('active');
+}
+function closeModal(e) {
+  if(e.target === document.getElementById('modal')) closeModalBtn();
+}
+function closeModalBtn() {
+  document.getElementById('modal').classList.remove('active');
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModalBtn(); });
+
+/* ─── INTERSECTION OBSERVER ─── */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.style.opacity='1';
+      e.target.style.transform='translateY(0)';
+    }
+  });
+}, {threshold:0.1});
+document.querySelectorAll('.skill-card, .proj-card, .edu-card, .exp-content, .contact-item').forEach(el => {
+  el.style.opacity='0';
+  el.style.transform='translateY(30px)';
+  el.style.transition='opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+
+/* ─── PHOTO FALLBACK ─── */
+const photoImg = document.querySelector('.photo-inner img');
+if(photoImg) {
+  photoImg.onerror = () => {
+    photoImg.parentElement.innerHTML = `<div style="width:100%;height:100%;background:linear-gradient(135deg,#0a1428 0%,#0d2060 50%,#1a0040 100%);display:flex;align-items:center;justify-content:center;border-radius:10px;"><div style="color:var(--neon-cyan);font-family:'Orbitron',monospace;font-size:1.1rem;text-align:center;line-height:1.3;">MOHAMMAD<br>FAHAD<br>ANSARI</div></div>`;
+  };
+}
+</script>
+</body>
+</html>
